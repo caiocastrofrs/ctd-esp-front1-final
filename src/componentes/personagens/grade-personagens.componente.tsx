@@ -1,5 +1,6 @@
 import "./grade-personagem.css";
 import CardPersonagem from "./card-personagem.componente";
+import { Personagem } from "../../types/personagensType";
 
 /**
  * Grade de personagens para a página inicial
@@ -9,12 +10,18 @@ import CardPersonagem from "./card-personagem.componente";
  *
  * @returns Elemento JSX
  */
-const GradePersonagem = () => {
+type Props = {
+  personagens: Personagem[],
+}
+const GradePersonagem = ({personagens}: Props) => {
+
   return (
     <div className="grade-personagens">
-      <CardPersonagem />
-      <CardPersonagem />
-      <CardPersonagem />
+      {personagens && 
+        personagens.map((personagem: Personagem) => {
+        return <CardPersonagem key={personagem.id} personagem={personagem} />
+      })
+      }
     </div>
   );
 };

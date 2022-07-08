@@ -20,7 +20,7 @@ import { useEffect } from 'react';
 const PaginaInicio = () => {
 
   const { isFetching, personagens, errorMessage } = store.getState().personagens;
-
+  
   useEffect(() => {
     if(personagens.length === 0) {
       store.dispatch(fetchPersonagensStarted());

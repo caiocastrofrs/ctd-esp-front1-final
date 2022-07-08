@@ -8,6 +8,8 @@ export const fetchPersonagensError = (errorMessage: string) => ({type: tipos.FET
 
 export const updateFavPersonagem = (id: number) => ({type: tipos.UPDATE_PERSONAGEM_FAVORITO_STATUS, payload: id})
 
+export const removerTodosFavs = () => ({type: tipos.REMOVER_TODOS_FAVS});
+
 export const fetchPersonagensThunk = () => async (dispatch: any) => {
 
   dispatch(fetchPersonagensStarted);

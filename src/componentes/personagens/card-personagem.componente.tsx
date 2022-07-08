@@ -5,6 +5,7 @@ import store from '../../store/index';
 import { bindActionCreators } from 'redux';
 import {updateFavPersonagem} from "../../store/actions/personagens.actions";
 import { connect } from 'react-redux';
+
 /**
  * Card para cada personagem dentro da grade de personagem.
  *
@@ -20,7 +21,7 @@ type Props = {
 const CardPersonagem = ({ personagem }: Props) => {
   
   const favoritoHandler = () => { 
-   store.dispatch(updateFavPersonagem(personagem.id));
+    store.dispatch(updateFavPersonagem(personagem.id));
   }
 
   return (

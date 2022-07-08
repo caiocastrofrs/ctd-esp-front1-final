@@ -11,7 +11,7 @@ import { Personagem } from "../../types/personagensType";
  * @returns Elemento JSX
  */
 type Props = {
-  personagens: Personagem[],
+  personagens: Personagem[] | undefined,
 }
 const GradePersonagem = ({personagens}: Props) => {
 

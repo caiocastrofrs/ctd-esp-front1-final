@@ -15,15 +15,11 @@ const Filtros = () => {
 
   const limparFiltro = () => {
     setFilterValue("");
-    store.dispatch(fetchPersonagensStarted());
     fetchPersonagensThunk()(store.dispatch);
   }
+
   useEffect(() => {
-    if(filterValue === "") return;
-
-    store.dispatch(fetchPersonagensStarted());
     filterPersonagensThunk(filterValue)(store.dispatch);
-
   },[filterValue])
 
   return (

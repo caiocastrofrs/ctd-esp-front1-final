@@ -4,7 +4,8 @@ import { Personagem } from '../../types/personagensType';
 const initialState = {
   isFetching: false,
   personagens: [],
-  favIdPersonagens: [],
+  favPersonagens: [],
+  favIdPersonagens: <any[]>[],
   errorMessage: undefined,
 }
 
@@ -20,7 +21,7 @@ export const personagemReducer = (state = initialState, action: tipos.ActionType
         ...state,
         isFetching: false,
         personagens:  action.payload.map((personagem: Personagem) => {
-          if (state.favIdPersonagens.find(el => el === personagem.id)) {
+          if (state.favIdPersonagens.find((el: number) => el === personagem.id)) {
               return {
                 ...personagem,
                 favorito: true,
@@ -35,6 +36,11 @@ export const personagemReducer = (state = initialState, action: tipos.ActionType
         ...state,
         isFetching: false,
         errorMessage: action.payload,
+      }
+    case tipos.FETCH_PERSONAGENS_FAVORITO:
+      return {
+        ...state,
+        favPersonagens: action.payload,
       }
     case tipos.UPDATE_PERSONAGEM_FAVORITO_STATUS:
       return {
@@ -53,6 +59,7 @@ export const personagemReducer = (state = initialState, action: tipos.ActionType
     case tipos.REMOVER_TODOS_FAVS: 
       return {
         ...state,
+        favPersonagens: [],
         favIdPersonagens: [],
         personagens: state.personagens.map((personagem: Personagem) =>  ({...personagem, favorito: false}))
       }

@@ -22,10 +22,8 @@ const PaginaInicio = () => {
   const { isFetching, personagens, errorMessage } = store.getState().personagens;
   
   useEffect(() => {
-    if(personagens.length === 0) {
-      store.dispatch(fetchPersonagensStarted());
-      fetchPersonagensThunk()(store.dispatch);
-    }
+    console.log(personagens);
+    fetchPersonagensThunk()(store.dispatch);
      },[])
 
   return (

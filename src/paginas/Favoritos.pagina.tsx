@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { RootState } from '../types/personagensType';
 import { useEffect, useState } from "react";
 import { Personagem } from '../types/personagensType';
-import { fetchPersonagensStarted, removerTodosFavs } from "../store/actions/personagens.actions";
+import { fetchFavPersonagensThunk, fetchPersonagensStarted, removerTodosFavs } from "../store/actions/personagens.actions";
 import { bindActionCreators } from 'redux';
 
 /**
@@ -16,11 +16,17 @@ import { bindActionCreators } from 'redux';
  * @returns Página de favoritos
  */
 const PaginaFavoritos = () => {
-  const { personagens } = store.getState().personagens;
-
-  const personagensFiltrados = personagens.filter((personagem: Personagem) => personagem.favorito ?? personagem); 
-
+  const { favIdPersonagens, favPersonagens } = store.getState().personagens;
   
+  //const personagensFiltrados = personagens.filter((personagem: Personagem) => personagem.favorito ?? personagem); 
+
+  useEffect(() => {
+    if(!favIdPersonagens.length) return;
+
+    fetchFavPersonagensThunk(favIdPersonagens)(store.dispatch);
+  },[])
+
+
   const removerFavsHandler = () => {
     store.dispatch(removerTodosFavs());
   }
@@ -31,7 +37,8 @@ const PaginaFavoritos = () => {
         <h3>Personagens Favoritos</h3>
         <button className="danger" onClick={removerFavsHandler}>Remover favoritos</button>
       </div>
-      <GradePersonagens personagens={personagensFiltrados}/>
+      {!favIdPersonagens.length ? <span>Nenhum personagem favorito</span>: <GradePersonagens personagens={favPersonagens}/>}
+      
     </div>
   );
 };
@@ -42,7 +49,7 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = (dispatch: any) => {
-  return  bindActionCreators({ removerTodosFavs }, dispatch)
+  return  bindActionCreators({ removerTodosFavs, fetchFavPersonagensThunk }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaginaFavoritos);

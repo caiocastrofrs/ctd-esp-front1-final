@@ -28,7 +28,7 @@ const CardPersonagem = ({ personagem }: Props) => {
   }
 
   const detalheHandler = () => {
-    navigate(`${personagem.id}`)
+    navigate(`/${personagem.id}`)
   }
 
   return (

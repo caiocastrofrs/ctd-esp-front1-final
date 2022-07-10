@@ -1,6 +1,7 @@
 .grade-personagens {
   display: grid;
+  margin: 0 auto;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  grid-gap: 3rem;
   justify-items: center;
 }

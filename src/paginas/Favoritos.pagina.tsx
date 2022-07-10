@@ -3,10 +3,9 @@ import store from '../store/index';
 import { connect } from 'react-redux';
 import { RootState } from '../types/personagensType';
 import { useEffect, useState } from "react";
-import { Personagem } from '../types/personagensType';
 import { fetchFavPersonagensThunk, fetchPersonagensStarted, removerTodosFavs } from "../store/actions/personagens.actions";
 import { bindActionCreators } from 'redux';
-
+import Helmet from 'react-helmet';
 /**
  * Esta é a página de favoritos. Aqui você deve ver todos os personagens marcados como favoritos
  *
@@ -33,11 +32,15 @@ const PaginaFavoritos = () => {
 
   return (
     <div className="container">
+      <Helmet>
+        <title>Favoritos</title>
+        <link type="image/png" sizes="32x32" rel="icon" href="https://img.icons8.com/plasticine/100/000000/morty-smith.png" />
+      </Helmet>
       <div className="actions">
         <h3>Personagens Favoritos</h3>
-        <button className="danger" onClick={removerFavsHandler}>Remover favoritos</button>
+        <button disabled={!favIdPersonagens.length} className="danger" onClick={removerFavsHandler}>Remover favoritos</button>
       </div>
-      {!favIdPersonagens.length ? <span>Nenhum personagem favorito</span>: <GradePersonagens personagens={favPersonagens}/>}
+      {!favIdPersonagens.length ? <span className="favoritos-vazio">Nenhum personagem favorito</span>: <GradePersonagens personagens={favPersonagens}/>}
       
     </div>
   );

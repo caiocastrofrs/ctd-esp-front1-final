@@ -24,7 +24,7 @@ button.primary {
 }
 
 
-button.primary[disabled] {
+button.primary[disabled], button.danger[disabled] {
     background-color: rgb(128, 134, 140);
 }
 
@@ -37,6 +37,13 @@ button.danger {
     border-radius: 5px;
     background-color: #8d2020;
     color: white;
+}
+
+span.favoritos-vazio, span.carregando {
+    display: block;
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 5rem;
 }
 
 @media (max-width: 1280px) {

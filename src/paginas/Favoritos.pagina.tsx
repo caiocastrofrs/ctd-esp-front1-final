@@ -42,7 +42,7 @@ const PaginaFavoritos = () => {
         <button disabled={!favIdPersonagens.length} className="danger" onClick={removerFavsHandler}>Remover favoritos</button>
       </div>
       {errorMessage && <span>Erro ao recuperar personagens favoritos: {errorMessage}</span>}
-      {isFetching && <span>Carregando personagagens favoritos...</span>}
+      {isFetching && <span>Carregando personagens favoritos...</span>}
       {!favIdPersonagens.length ? <span className="favoritos-vazio">Nenhum personagem favorito</span>: <GradePersonagens personagens={favPersonagens}/>}
     </div>
   );

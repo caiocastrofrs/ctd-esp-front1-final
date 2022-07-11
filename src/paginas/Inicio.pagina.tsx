@@ -20,13 +20,13 @@ import Helmet from 'react-helmet';
 
 const PaginaInicio = () => {
 
-const { isFetching, personagens, errorMessage } = store.getState().personagens;
+  const { isFetching, personagens, errorMessage } = store.getState().personagens;
 
-useEffect(() => {
-  fetchPersonagensThunk()(store.dispatch);
-   },[])
+  useEffect(() => {
+    fetchPersonagensThunk()(store.dispatch);
+  },[])
 
-return (
+  return (
     <div className="container">
       <Helmet>
         <title>Home</title>
@@ -42,6 +42,7 @@ return (
         :
         <GradePersonagens personagens={personagens}/>
       }
+      {errorMessage && <span>Falha em obter os personagens: {errorMessage}</span>}
       </div>
   );
 };

@@ -1,15 +1,15 @@
 import * as tipos from '../../types/personagensType';
-import { Personagem } from '../../types/personagensType';
+import { Personagem, Info } from '../../types/personagensType';
 
 const initialState = {
   isFetching: false,
   personagens: [],
-  personagem: {},
+  personagem: {} as Personagem,
   favPersonagens: [],
   episodios: [],
-  favIdPersonagens: <any[]>[],
+  favIdPersonagens: [] as any[],
   errorMessage: undefined,
-  paginacao: {},
+  paginacao: {} as Info,
 }
 
 export const personagemReducer = (state = initialState, action: tipos.ActionType) => {
@@ -41,7 +41,8 @@ export const personagemReducer = (state = initialState, action: tipos.ActionType
       return {
         ...state,
         isFetching: false,
-       personagem: action.payload, 
+        //Validação necessária para persistir o estado de favorito na página de detalhe quando é feito um refetch
+        personagem: state.favIdPersonagens.find(el => el === action.payload.id) ? {...action.payload, favorito: true} : action.payload,
       }
     case tipos.FETCH_EPISODIOS:
       return {
@@ -57,24 +58,30 @@ export const personagemReducer = (state = initialState, action: tipos.ActionType
     case tipos.FETCH_PERSONAGENS_FAVORITO:
       return {
         ...state,
+        isFetching: false,
         favPersonagens: action.payload,
       }
     case tipos.UPDATE_PERSONAGEM_FAVORITO_STATUS:
       return {
         ...state,
+        //Necessário para atualizar o estado de favorito na página de detalhe
+        personagem: state.personagem.id === action.payload ? {
+          ...state.personagem,
+          favorito: !state.personagem.favorito
+        } : state.personagem,
         //Aqui é feito um find para checar se o personagem já está favoritado 
         //e caso esteja ele será removido do array de favoritados usando um filter,
         //caso não esteja, ele será adicionado ao array.
-        favIdPersonagens: 
+        favIdPersonagens:  
         state.favIdPersonagens.find( id => id === action.payload ) ?
         state.favIdPersonagens.filter( id => id !== action.payload ) :
         [ ...state.favIdPersonagens , action.payload ],
         //Aqui a lógica é a mesma que a de cima com a diferença de que apenas remove do array
         favPersonagens: 
-        state.favPersonagens.find( ( personagem: Personagem ) => personagem.id === action.payload) ?
-        state.favPersonagens.filter( ( personagem: Personagem ) => personagem.id !== action.payload) :
+        state.favPersonagens.find( ( personagem: Personagem ) => personagem.id === action.payload ) ?
+        state.favPersonagens.filter( ( personagem: Personagem ) => personagem.id !== action.payload ) :
         [ ...state.favPersonagens ],
-        //Alteração do estado de favorito.
+        //Alteração do estado do favorito.
         personagens: 
         state.personagens.map( ( personagem: Personagem ) => {
           if ( personagem.id !== action.payload ) {

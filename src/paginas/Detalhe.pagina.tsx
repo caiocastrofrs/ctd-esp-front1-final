@@ -3,12 +3,14 @@ import BotaoFavorito from "../componentes/botoes/botao-favorito.componente";
 import CardEpisodio from "../componentes/episodios/card-episodio.componente";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { fetchPersonagemThunk, updateFavPersonagem } from "../store/actions/personagens.actions";
+import { fetchEpisodiosThunk, fetchPersonagemThunk, updateFavPersonagem } from "../store/actions/personagens.actions";
 import { RootState, Episodio } from "../types/personagensType";
 import store from '../store/index';
 import {useEffect} from "react";
 import { useParams } from "react-router-dom";
 import {Helmet} from "react-helmet";
+import {getEpisodiosId} from "../utils/utils";
+
 /**
  * Esta é a página de detalhes. Aqui você pode mostrar a visão do personagem selecionado junto com a lista de episódios em que ele aparece
  *
@@ -21,24 +23,37 @@ import {Helmet} from "react-helmet";
  *
  * @returns Página de detalhe
  */
-
 const PaginaDetalhe = () => {
   const { id } = useParams();
-  const { personagem, isFetching } = store.getState().personagens;
+
+  const { personagem, isFetching, episodios } = store.getState().personagens;
  
   const favoritoHandler = () => {
+
     store.dispatch(updateFavPersonagem(personagem.id))
+
   }
 
-  console.log(personagem.favorito);
+  useEffect(() => {
+
+    if(id) fetchPersonagemThunk(id)(store.dispatch)
+
+  },[])
 
   useEffect(() => {
-    if(id) fetchPersonagemThunk(id)(store.dispatch)
-  },[])
+    if(personagem.episode) {
+
+      let idEpisodios = getEpisodiosId(personagem.episode);
+
+      fetchEpisodiosThunk(idEpisodios)(store.dispatch);
+      
+    }
+
+  },[personagem.episode])
 
   return (
     <>
-    {isFetching && <span>Carregando personagem</span>}
+    {isFetching && <span>Carregando personagem...</span>}
     {!isFetching && 
       <div className="container">
         <Helmet>
@@ -62,9 +77,11 @@ const PaginaDetalhe = () => {
         </div>
         <h4>Lista de episódios em que o personagem apareceu</h4>
       <div className={"episodios-grade"}>
-        <CardEpisodio />
-        <CardEpisodio />
-        <CardEpisodio />
+        {episodios.length && 
+          episodios.map((episodio: Episodio) => {
+            return <CardEpisodio episodio={episodio} key={episodio.id} />
+          })
+        }
       </div>
     </div>}
     </>)

@@ -1,11 +1,15 @@
 import BotaoFavorito from "../botoes/botao-favorito.componente";
 import "./card-personagem.css";
-import { Personagem, RootState } from "../../types/personagensType";
+import { Personagem } from "../../types/personagensType";
 import store from '../../store/index';
 import { bindActionCreators } from 'redux';
-import {updateFavPersonagem} from "../../store/actions/personagens.actions";
+import { updateFavPersonagem } from "../../store/actions/personagens.actions";
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+type Props = {
+  personagem: Personagem;
+}
 
 /**
  * Card para cada personagem dentro da grade de personagem.
@@ -15,10 +19,6 @@ import { useNavigate } from 'react-router-dom';
  *
  * @returns Elemento JSX
  */
-type Props = {
-  personagem: Personagem;
-}
-
 const CardPersonagem = ({ personagem }: Props) => {
   
   const navigate = useNavigate();

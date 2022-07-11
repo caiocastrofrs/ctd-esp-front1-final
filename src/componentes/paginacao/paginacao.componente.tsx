@@ -3,8 +3,7 @@ import { RootState } from "../../types/personagensType";
 import { bindActionCreators } from 'redux';
 import store from '../../store/index';
 import { connect } from "react-redux";
-import { fetchNovaPagina } from '../../store/actions/personagens.actions';
-import { useRef } from 'react';
+import { fetchNovaPaginaThunk } from '../../store/actions/personagens.actions';
 
 /**
  * Componente que contém os botões para paginar
@@ -22,13 +21,13 @@ const Paginacao = () => {
   const nextPageHandler = () => {
     if(!paginacao.next) return;
 
-    fetchNovaPagina(paginacao.next)(store.dispatch)
+    fetchNovaPaginaThunk(paginacao.next)(store.dispatch)
   }
 
   const prevPageHandler = () => {
     if(!paginacao.prev) return;
 
-    fetchNovaPagina(paginacao.prev)(store.dispatch)
+    fetchNovaPaginaThunk(paginacao.prev)(store.dispatch)
   }
   return (
     <div className="paginacao">
@@ -47,6 +46,6 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 const mapDispatchToProps = (dispatch: any) => {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators({fetchNovaPaginaThunk}, dispatch);
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Paginacao);

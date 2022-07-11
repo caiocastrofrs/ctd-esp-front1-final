@@ -3,6 +3,11 @@ import { MouseEventHandler } from 'react';
 import solidHeart from '../../icons/heart-solid.svg';
 import regularHeart from '../../icons/heart-regular.svg';
 
+type Props = {
+  isFavorito: boolean;
+  favoritoHandler?: MouseEventHandler; 
+}
+
 /**
  * Botão que indica se um elemento é favorito ou não, e dá a possibilidade de marcá-lo/desmarcá-lo
  *
@@ -11,12 +16,6 @@ import regularHeart from '../../icons/heart-regular.svg';
  *
  * @returns Elemento JSX
  */
-
-type Props = {
-  isFavorito: boolean;
-  favoritoHandler?: MouseEventHandler; 
-}
-
 const BotaoFavorito = ({ isFavorito , favoritoHandler }: Props) => {
   
   const src = isFavorito ? solidHeart : regularHeart;

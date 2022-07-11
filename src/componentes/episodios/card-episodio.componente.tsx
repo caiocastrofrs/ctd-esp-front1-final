@@ -1,20 +1,24 @@
+import {Episodio} from "../../types/personagensType";
 import "./card-episodio.css";
+
+type Props = {
+  episodio: Episodio,
+}
 
 /**
  * Card para cada episódio na visualização do personagem.
  *
  * Você precisará adicionar as propriedades necessárias para exibir os dados dos episódios
  *
- *
  * @returns Elemento JSX
  */
-const CardEpisodio = () => {
+const CardEpisodio = ({ episodio }: Props) => {
   return (
     <div className="card-episodio">
-      <h4>Close Rick-counters of the Rick Kind</h4>
+      <h4>{episodio.name}</h4>
       <div>
-        <span>S01E01</span>
-        <span>Lançado em: April 7, 2014</span>
+        <span>{episodio.episode}</span>
+        <span>{episodio.air_date}</span>
       </div>
     </div>
   );

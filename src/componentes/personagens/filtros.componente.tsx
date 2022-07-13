@@ -20,11 +20,15 @@ const Filtros = () => {
   }
 
   const limparFiltro = () => {
-    setFilterValue("");
+    if(filterValue === "") return;
+
     fetchPersonagensThunk()(store.dispatch);
   }
 
   useEffect(() => {
+
+    if(filterValue === "") return;
+
     filterPersonagensThunk(filterValue)(store.dispatch);
   },[filterValue])
 

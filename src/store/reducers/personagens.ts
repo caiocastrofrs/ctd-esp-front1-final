@@ -24,6 +24,7 @@ export const personagemReducer = (state = initialState, action: tipos.ActionType
         ...state,
         isFetching: false,
         paginacao: action.payload.info,
+        errorMessage: undefined,
         personagens:
         //Map feito com o intuito de persistir o estado de favorito quando é feito um filtro ou refetch.
         action.payload.results.map( ( personagem: Personagem ) => {

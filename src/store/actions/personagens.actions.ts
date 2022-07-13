@@ -1,5 +1,6 @@
 import * as tipos from '../../types/personagensType';
 import { addCampoFavoritoEmObj } from '../../utils/utils';
+
 export const fetchPersonagensStarted = () => ({type: tipos.FETCH_PERSONAGENS_STARTED});
 
 /**
